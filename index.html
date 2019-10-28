@@ -4,11 +4,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Functional pills for OO developers</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/solarized.css">
+    <link rel="stylesheet" href="css/theme/marcosh.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
@@ -25,9 +26,14 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-markdown="fpoop.md"></section>
 			</div>
+
+      <footer>
+        <div class="details">
+        Codroipo, November 15<sup>th</sup> 2019 -
+        <a href="https://twitter.com/marcoshuttle">@marcoshuttle</a>
+    </footer>
 		</div>
 
 		<script src="js/reveal.js"></script>
@@ -37,6 +43,13 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+        controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide',
+
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
