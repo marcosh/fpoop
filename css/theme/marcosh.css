@@ -10,6 +10,11 @@
   font-size: 1.9em;
 }
 
+.reveal .no-margin p
+{
+  margin: 0 !important;
+}
+
 /*********************************************
  * CODE
  *********************************************/
@@ -79,4 +84,16 @@ pre code {
   .reveal footer img {
     display: none;
   }
+}
+
+/*********************************************
+ * COLOURS
+ *********************************************/
+
+.values {
+  color : blue !important;
+}
+
+.ideas {
+  color: purple !important;
 }
