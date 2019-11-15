@@ -52,7 +52,7 @@ Interfaces for abstraction <!-- .element: class="ideas fragment" data-fragment-i
 
 ---
 
-## FP style?
+## FP style
 
 Correctness <!-- .element: class="values fragment" data-fragment-index="1" -->
 
@@ -101,7 +101,7 @@ g (f x)
 
 ## Code as equations
 
-Executing the code mean solving a set of equations
+Executing the code means solving a set of equations
 
 Easy to reason about the code
 
@@ -146,7 +146,7 @@ Never mutate the state of an object
 Always return a new copy
 
 ```php
-public function changeName($newName)
+public function changeName($newName) : self
 {
   $newPerson = clone $this;
 
@@ -207,14 +207,14 @@ Function composition as glue
 ## Functions are values
 
 ```php
-$f = function (int $x) {return $x + 5;}
+$f = function (int $x) : int {return $x + 5;}
 ```
 
 ---
 
 ## Programs are values
 
-Strategy pattern becomes obvious
+Programs as inputs/outputs of other programs
 
 ---
 
@@ -252,9 +252,9 @@ Reduce need for error handling
 
 ## How?
 
-Input/outputs of functions as sets of values
-
 Use the correct data structure
+
+Value objects
 
 ---
 
@@ -279,6 +279,8 @@ data Score
 ## How? (where you can't)
 
 [Visitor pattern](https://blog.ploeh.dk/2018/06/25/visitor-as-a-sum-type/)
+
+Named constructors
 
 ---
 
@@ -354,9 +356,9 @@ sum (x :: xs) = x + sum xs
 ## Generalise on the type
 
 ```haskell
-foldr : (a -> a -> a) -> a -> [a] -> a
-foldr acc init []        = init
-foldr acc init (x :: xs) = acc x (foldr acc init xs)
+fold : (Monoid a) => [a] -> a
+fold []        = 0
+fold (x :: xs) = x + fold xs
 ```
 
 ---
@@ -364,7 +366,7 @@ foldr acc init (x :: xs) = acc x (foldr acc init xs)
 ## Generalise on the data structure
 
 ```haskell
-foldr : Foldable t => (a -> a -> a) -> a -> t a -> a
+fold : (Monoid a, Foldable t) => t a -> a
 ```
 
 ---
@@ -449,7 +451,7 @@ final class Maybe {
   static function just($value) : self
   static function nothing() : self
 
-  function match(callable $just, callable $nothing)
+  function match(callable $onJ, callable $onN)
 }
 ```
 
