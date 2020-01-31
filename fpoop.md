@@ -77,7 +77,7 @@ Everything is a value <!-- .element: class="ideas fragment" data-fragment-index=
 ## What does `=` mean?
 
 ```haskell
-a = f x
+a = f(x)
 ```
 
 ---
@@ -85,15 +85,15 @@ a = f x
 ## Can we interchange equal things?
 
 ```haskell
-a = f x
+a = f(x)
 
 # is the program
 
-g a
+g(a)
 
 # equivalent to
 
-g (f x)
+g(f(x))
 
 ```
 
@@ -127,14 +127,14 @@ Never mutate the state of an object
 
 ## Why?
 
-What is the value of `$name`?
+What is the value of `name`?
 
-```php
-$person = new Person('Gigi', 'Zucon');
+```java
+Person person = new Person('Gigi', 'Zucon');
 
-doSomethingToPerson($person);
+doSomethingToPerson(person);
 
-$name = $person->name();
+name = person.getName();
 ```
 
 ---
@@ -145,14 +145,14 @@ Never mutate the state of an object
 
 Always return a new copy
 
-```php
-public function changeName($newName) : self
+```java
+public Person changeName(String name)
 {
-  $newPerson = clone $this;
+    Person newPerson = (Person) super.clone();
 
-  $newPerson->name = $newName;
+    newPerson.name = name;
 
-  return $newPerson;
+    return newPerson;
 }
 ```
 
@@ -184,7 +184,7 @@ Fluent interfaces? [Meh...](https://ocramius.github.io/blog/fluent-interfaces-ar
 
 ---
 
-### Again, how?
+## Again, how?
 
 Model your domain with compositional structures
 
@@ -192,13 +192,29 @@ Monoids, categories, ...
 
 ---
 
-### And again, how?
+## And again, how?
 
 Pure functions create naturally a category
 
 Function composition as glue
 
 ---
+
+<!-- ## Example
+
+```java
+public final class Result<E,T> {
+    public static <E,T> Result<E,T> valid(T value)
+
+	public static <E,T> Result<E,T> errors(E errors)
+}
+
+interface Validation<E,T> {
+    public Result<E,T> validate(Object data);
+}
+```
+
+--- -->
 
 ## #4 Everything is a value <!-- .element: class="ideas" -->
 
@@ -207,7 +223,8 @@ Function composition as glue
 ## Functions are values
 
 ```php
-$f = function (int $x) : int {return $x + 5;}
+Function<Integer, Integer>
+sum = (Integer x) -> {return x + 5;};
 ```
 
 ---
@@ -223,9 +240,9 @@ Programs as inputs/outputs of other programs
 We can now abstract over inner computation
 
 ```haskell
-decorator : (a -> b) -> a -> b
+decorator : (a -> b) -> (a -> b)
 
-continuation : a -> (a -> b) -> b
+continuation : a -> ((a -> b) -> b)
 ```
 
 ---
@@ -247,6 +264,18 @@ Be careful with the typing
 Better model design
 
 Reduce need for error handling
+
+---
+
+## Silly example
+
+```java
+class Person {
+  public Person()
+
+  public Person setName(String name)
+  public Person setSurname(String name)
+}
 
 ---
 
@@ -281,6 +310,21 @@ data Score
 [Visitor pattern](https://blog.ploeh.dk/2018/06/25/visitor-as-a-sum-type/)
 
 Named constructors
+
+---
+
+## Example
+
+```java
+public final class Result<E,T> {
+	private final T value;
+    private final E errors;
+	private final boolean isValid;
+
+    public static <E,T> Result<E,T> valid(T value)
+	public static <E,T> Result<E,T> errors(E errors)
+}
+```
 
 ---
 
@@ -379,7 +423,7 @@ Abstract on data structures
 
 ## How?
 
-Parametric polymorphism is not enough
+Generics are not enough
 
 Sorry... ¯\\\_(ツ)\_/¯
 
@@ -443,15 +487,16 @@ Describe your effects as data structures
 
 ## Failure
 
-```php
-final class Maybe {
-  private $isJust;
-  private $value;
-
-  static function just($value) : self
-  static function nothing() : self
-
-  function match(callable $onJ, callable $onN)
+```java
+public final class Maybe<T> {
+	private final T value;
+	private final boolean isJust;
+	public static <T> Maybe<T> just(T value)
+	public static <T> Maybe<T> nothing()
+	public <R> R match(
+      Function<T, R> onJust,
+      Function<Void, R> onNothing
+    )
 }
 ```
 
