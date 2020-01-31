@@ -1,3 +1,5 @@
+@import url(../../lib/font/fira/fira_code.css);
+
 /*********************************************
  * GLOBAL
  *********************************************/
@@ -22,6 +24,10 @@
 pre code {
   line-height: 1.5em;
 }
+
+.reveal code {
+  font-family: 'Fira Code';
+  text-transform: none; }
 
 /*********************************************
  * IMAGES
